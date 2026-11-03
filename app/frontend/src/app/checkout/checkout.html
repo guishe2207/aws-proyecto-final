@@ -1,0 +1,31 @@
+<main class="checkout-shell">
+  <a routerLink="/carrito">← Volver al carrito</a>
+  @if (isEmpty()) {
+    <section class="confirmation"><h1>Tu carrito está vacío</h1><a routerLink="/">Explorar catálogo</a></section>
+  } @else {
+    <header><p class="eyebrow">CHECKOUT</p><h1>Finaliza tu compra</h1><p class="simulation">PAGO SIMULADO — NO SE REALIZA NINGÚN COBRO REAL.</p></header>
+    @if (error()) { <p class="error" role="alert">{{ error() }}</p> }
+    <div class="checkout-grid">
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <h2>Datos de entrega</h2>
+        <div class="fields">
+          <label>Nombre completo<input formControlName="nombre">@if(form.controls.nombre.touched && form.controls.nombre.invalid){<small class="field-error">Ingresa tu nombre.</small>}</label>
+          <label>Correo<input type="email" formControlName="correo">@if(form.controls.correo.touched && form.controls.correo.invalid){<small class="field-error">Ingresa un correo válido.</small>}</label>
+          <label>Teléfono<input formControlName="telefono">@if(form.controls.telefono.touched && form.controls.telefono.invalid){<small class="field-error">El teléfono es obligatorio.</small>}</label>
+          <label>Dirección<input formControlName="direccion">@if(form.controls.direccion.touched && form.controls.direccion.invalid){<small class="field-error">La dirección es obligatoria.</small>}</label>
+          <label>Ciudad<input formControlName="ciudad">@if(form.controls.ciudad.touched && form.controls.ciudad.invalid){<small class="field-error">La ciudad es obligatoria.</small>}</label>
+          <label>Departamento<input formControlName="departamento">@if(form.controls.departamento.touched && form.controls.departamento.invalid){<small class="field-error">El departamento es obligatorio.</small>}</label>
+        </div>
+        <label>Observaciones (opcional)<textarea formControlName="observaciones"></textarea></label>
+        <h2>Demostración de pago</h2><p class="payment-note">Usa datos ficticios. Estos campos nunca se envían ni se guardan.</p>
+        <div class="fields">
+          <label>Titular ficticio<input formControlName="titular">@if(form.controls.titular.touched && form.controls.titular.invalid){<small class="field-error">Indica un titular ficticio.</small>}</label>
+          <label>Tarjeta ficticia<input inputmode="numeric" placeholder="4242 4242 4242 4242" formControlName="tarjetaDemo">@if(form.controls.tarjetaDemo.touched && form.controls.tarjetaDemo.invalid){<small class="field-error">Usa 16 dígitos de demostración.</small>}</label>
+          <label>Vencimiento<input placeholder="MM/AA" formControlName="vencimiento">@if(form.controls.vencimiento.touched && form.controls.vencimiento.invalid){<small class="field-error">Usa el formato MM/AA.</small>}</label>
+          <label>CVV ficticio<input type="password" inputmode="numeric" formControlName="cvvDemo">@if(form.controls.cvvDemo.touched && form.controls.cvvDemo.invalid){<small class="field-error">Usa 3 o 4 dígitos ficticios.</small>}</label>
+        </div>
+      </form>
+      <aside><h2>Resumen</h2>@for (item of cart.items(); track item.producto.idProducto) { <div class="line"><span>{{ item.producto.nombre }} × {{ item.cantidad }}</span><strong>{{ item.producto.precio * item.cantidad | currency:'COP':'symbol-narrow':'1.0-0' }}</strong></div> }<div class="total"><span>{{ cart.totalUnits() }} unidades</span><strong>{{ cart.total() | currency:'COP':'symbol-narrow':'1.0-0' }}</strong></div><button class="confirm" type="button" [disabled]="processing()" (click)="submit()">{{ processing() ? 'Procesando compra...' : 'Confirmar compra simulada' }}</button></aside>
+    </div>
+  }
+</main>

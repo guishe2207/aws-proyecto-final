@@ -1,0 +1,35 @@
+{
+  "name": "tienda-en-linea-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API REST para el catalogo de productos",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node --test",
+    "check": "node --check src/server.js",
+    "admin:crear": "node scripts/crear-admin.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "glob": "14.0.3",
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
+  },
+  "overrides": {
+    "minimatch": "^11.0.1",
+    "glob": "14.0.3"
+  }
+}

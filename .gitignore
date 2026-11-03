@@ -1,0 +1,26 @@
+﻿# Credenciales y configuraciones locales
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+terraform.tfvars
+*.auto.tfvars
+
+# Estado de Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+
+# Archivos de dependencias y compilación
+node_modules/
+dist/
+coverage/
+
+# Archivos del sistema y editor
+.DS_Store
+Thumbs.db
+.vscode/

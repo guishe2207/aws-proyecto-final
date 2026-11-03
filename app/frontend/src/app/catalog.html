@@ -1,0 +1,110 @@
+<div class="storefront">
+  <header class="topbar">
+    <a class="wordmark" href="#inicio" aria-label="Catalogo, inicio">
+      <span class="wordmark-mark" aria-hidden="true">C</span>
+      <span><strong>Catalogo</strong></span>
+    </a>
+    <a class="topbar-link" href="#catalogo">Explorar catalogo <span aria-hidden="true">↘</span></a>
+    <a class="topbar-link" routerLink="/carrito">Carrito ({{ cart.totalUnits() }})</a>
+  </header>
+
+  <main id="inicio">
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> OBJETOS PARA TODOS LOS DIAS</p>
+        <h1 id="intro-title">Pequenos detalles,<br><em>grandes historias.</em></h1>
+        <p class="intro-description">Piezas elegidas con cuidado para acompanarte y hacer mas tuyos tus espacios.</p>
+        <a class="intro-link" href="#catalogo">Descubre la seleccion <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="intro-image" aria-roledescription="carrusel" aria-label="Destacados">
+        @for (slide of slides; track slide.image; let index = $index) {
+          <figure class="slide" [class.is-active]="currentSlide() === index" [attr.aria-hidden]="currentSlide() !== index">
+            <img [src]="slide.image" [alt]="slide.caption" [attr.loading]="index === 0 ? 'eager' : 'lazy'" (error)="onImageError($event)">
+            <figcaption class="image-caption">{{ slide.caption }}</figcaption>
+          </figure>
+        }
+      </div>
+      <div class="intro-index">
+        <span class="slide-count" aria-live="polite">{{ (currentSlide() + 1).toString().padStart(2, '0') }} / {{ slides.length.toString().padStart(2, '0') }}</span>
+        <div class="slide-dots">
+          @for (slide of slides; track slide.image; let index = $index) {
+            <button type="button" class="slide-dot" [class.is-active]="currentSlide() === index" [attr.aria-label]="'Ver imagen ' + (index + 1)" [attr.aria-current]="currentSlide() === index" (click)="showSlide(index)"></button>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog" id="catalogo" aria-labelledby="catalog-title">
+      <div class="catalog-heading">
+        <div>
+          <p class="eyebrow">LA SELECCION</p>
+          <h2 id="catalog-title">Piezas con proposito<span>.</span></h2>
+        </div>
+        <label class="category-filter">
+          <span>Explorar por</span>
+          <select [value]="selectedCategoryId() ?? ''" (change)="onCategoryChange($event)" aria-label="Filtrar productos por categoria">
+            <option value="">Todas las categorias</option>
+            @for (category of categories(); track category.idCategoria) {
+              <option [value]="category.idCategoria">{{ category.nombre }}</option>
+            }
+          </select>
+        </label>
+      </div>
+
+      @if (categoryError()) {
+        <p class="inline-notice" role="status">{{ categoryError() }}</p>
+      }
+
+      <div class="catalog-meta" aria-live="polite">
+        <span>{{ products().length }} {{ products().length === 1 ? 'pieza' : 'piezas' }}</span>
+        <span class="meta-rule"></span>
+        <span>{{ selectedCategoryId() ? 'Seleccion por categoria' : 'Coleccion completa' }}</span>
+      </div>
+
+      @if (loading()) {
+        <div class="state-message" role="status">Buscando piezas para ti...</div>
+      } @else if (error()) {
+        <div class="state-message state-error" role="alert">
+          <p>{{ error() }}</p>
+          <button type="button" class="retry-button" (click)="retry()">Intentar de nuevo</button>
+        </div>
+      } @else if (products().length === 0) {
+        <div class="state-message">No hay productos en esta seleccion por ahora.</div>
+      } @else {
+        <div class="product-grid">
+          @for (product of products(); track product.idProducto; let position = $index) {
+            <article class="product-item" [style.--item-order]="position">
+              <div class="product-image-wrap">
+                <img
+                  [src]="product.imagen || fallbackImage"
+                  [alt]="product.nombre"
+                  loading="lazy"
+                  (error)="onImageError($event)"
+                >
+                <span class="product-number">{{ (position + 1).toString().padStart(2, '0') }}</span>
+              </div>
+              <div class="product-details">
+                <p class="product-category">{{ categoryName(product.idCategoria) }}</p>
+                <h3>{{ product.nombre }}</h3>
+                @if (product.descripcion) {
+                  <p class="product-description">{{ product.descripcion }}</p>
+                }
+                <div class="product-bottom">
+                  <span class="product-price">{{ product.precio | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+                  <span class="stock-label">{{ product.stock > 0 ? 'Disponible' : 'Agotado' }}</span>
+                  <button type="button" class="add-cart" [disabled]="product.stock === 0" (click)="addToCart(product)">{{ product.stock > 0 ? 'Agregar al carrito' : 'Agotado' }}</button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Catalogo</span>
+    <span>Una seleccion hecha con cuidado.</span>
+    <a class="footer-link" routerLink="/admin/login">Administración</a>
+  </footer>
+</div>
