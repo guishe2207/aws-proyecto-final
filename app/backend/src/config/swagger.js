@@ -9,7 +9,12 @@ module.exports = swaggerJsdoc({
       version: '1.0.0',
       description: 'API JSON para consultar y administrar categorias y productos del catalogo.',
     },
-    servers: [{ url: 'http://localhost:3000', description: 'Servidor local' }],
+    servers: [
+      {
+        url: '/',
+        description: 'Servidor actual',
+      },
+    ],
     security: [{ bearerAuth: [] }],
     tags: [
       { name: 'Categorias', description: 'Organizacion del catalogo por categoria' },
@@ -102,3 +107,4 @@ module.exports = swaggerJsdoc({
   ],
   failOnErrors: true,
 });
+
