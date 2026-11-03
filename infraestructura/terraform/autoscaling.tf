@@ -17,10 +17,18 @@ resource "aws_launch_template" "backend" {
   name_prefix   = "${var.project_name}-backend-"
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = var.instance_type
-  
+
   iam_instance_profile {
-  name = aws_iam_instance_profile.ec2.name
+    name = "LabInstanceProfile"
   }
+
+  user_data = base64encode(templatefile("${path.module}/../../scripts/user_data.sh", {
+    region   = var.aws_region
+    repo_url = "https://github.com/guishe2207/aws-proyecto-final.git"
+    db_host  = aws_db_instance.main.address
+    db_name  = var.database_name
+    db_user  = var.database_username
+  }))
 
   network_interfaces {
     associate_public_ip_address = true
