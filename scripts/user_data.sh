@@ -12,7 +12,7 @@ echo "Iniciando configuracion del backend..."
 
 # Instalar dependencias
 dnf update -y
-dnf install -y git nodejs22
+dnf install -y git nodejs22 --allowerasing
 
 # Descargar el proyecto
 mkdir -p "$APP_DIR"
