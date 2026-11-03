@@ -27,6 +27,7 @@ app.use(helmet({
       imgSrc: ["'self'", 'data:', 'https:'],
       scriptSrc: ["'self'", "'unsafe-inline'"], // Swagger UI incorpora su inicialización en línea.
       styleSrc: ["'self'", "'unsafe-inline'"],
+      upgradeInsecureRequests: null,
     },
   },
   crossOriginResourcePolicy: { policy: 'cross-origin' },
