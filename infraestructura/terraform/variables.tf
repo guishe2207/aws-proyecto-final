@@ -1,5 +1,5 @@
 variable "aws_region" {
-  description = "Región de AWS donde se desplegará la infraestructura"
+  description = "Región AWS"
   type        = string
   default     = "us-east-1"
 }
@@ -11,19 +11,19 @@ variable "project_name" {
 }
 
 variable "environment" {
-  description = "Entorno de despliegue"
+  description = "Entorno"
   type        = string
   default     = "dev"
 }
 
 variable "vpc_cidr" {
-  description = "Rango CIDR de la VPC"
+  description = "CIDR de la VPC"
   type        = string
   default     = "10.0.0.0/16"
 }
 
 variable "availability_zones" {
-  description = "Zonas de disponibilidad"
+  description = "Dos zonas de disponibilidad"
   type        = list(string)
   default     = ["us-east-1a", "us-east-1b"]
 }
@@ -41,13 +41,19 @@ variable "database_name" {
 }
 
 variable "database_username" {
-  description = "Usuario administrador de PostgreSQL"
+  description = "Usuario administrador PostgreSQL"
   type        = string
   default     = "tienda_admin"
 }
 
 variable "database_password" {
-  description = "Contraseña de PostgreSQL"
+  description = "Contraseña PostgreSQL desde TF_VAR_database_password"
   type        = string
   sensitive   = true
+}
+
+variable "frontend_origin" {
+  description = "Origen público permitido por CORS"
+  type        = string
+  default     = "https://tienda-modular-frontend.onrender.com"
 }

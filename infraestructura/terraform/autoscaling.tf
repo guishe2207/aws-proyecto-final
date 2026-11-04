@@ -18,20 +18,33 @@ resource "aws_launch_template" "backend" {
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = var.instance_type
 
+  # AWS Academy VocLabPolicy2 solo permite volúmenes gp2/standard y <=35 GiB.
+  # Declarar el root volume explícitamente evita depender del default de la AMI.
+  block_device_mappings {
+    device_name = data.aws_ami.amazon_linux.root_device_name
+
+    ebs {
+      volume_size           = 8
+      volume_type           = "gp2"
+      delete_on_termination = true
+    }
+  }
+
   iam_instance_profile {
     name = "LabInstanceProfile"
   }
 
   user_data = base64encode(templatefile("${path.module}/../../scripts/user_data.sh", {
-    region   = var.aws_region
-    repo_url = "https://github.com/guishe2207/aws-proyecto-final.git"
-    db_host  = aws_db_instance.main.address
-    db_name  = var.database_name
-    db_user  = var.database_username
+    region          = var.aws_region
+    repo_url        = "https://github.com/guishe2207/aws-proyecto-final.git"
+    db_host         = aws_db_instance.main.address
+    db_name         = var.database_name
+    db_user         = var.database_username
+    frontend_origin = var.frontend_origin
   }))
 
   network_interfaces {
-    associate_public_ip_address = true
+    associate_public_ip_address = false
     security_groups             = [aws_security_group.backend.id]
   }
 
@@ -47,10 +60,10 @@ resource "aws_launch_template" "backend" {
 
 resource "aws_autoscaling_group" "backend" {
   name                = "${var.project_name}-backend-asg"
-  min_size            = 1
+  min_size            = 2
   max_size            = 2
-  desired_capacity    = 1
-  vpc_zone_identifier = aws_subnet.public[*].id
+  desired_capacity    = 2
+  vpc_zone_identifier = aws_subnet.private[*].id
 
   target_group_arns = [aws_lb_target_group.backend.arn]
 

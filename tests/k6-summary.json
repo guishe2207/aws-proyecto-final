@@ -1,0 +1,150 @@
+{
+    "metrics": {
+        "checks": {
+            "passes": 2121,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.98": false
+            },
+            "value": 1
+        },
+        "http_req_tls_handshaking": {
+            "avg": 0,
+            "min": 0,
+            "med": 0,
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_duration": {
+            "med": 83.1797,
+            "max": 213.1432,
+            "p(90)": 89.14133999999999,
+            "p(95)": 100.62226999999999,
+            "avg": 85.13301485148516,
+            "min": 78.942,
+            "thresholds": {
+                "p(95)<1500": false
+            }
+        },
+        "iteration_duration": {
+            "avg": 1089.0880534653459,
+            "min": 1079.2347,
+            "med": 1084.2038,
+            "max": 1310.1576,
+            "p(90)": 1100.7282200000002,
+            "p(95)": 1113.88363
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 707,
+            "thresholds": {
+                "rate<0.02": false
+            },
+            "value": 0
+        },
+        "data_received": {
+            "rate": 3538.020418598454,
+            "count": 639128
+        },
+        "iterations": {
+            "count": 707,
+            "rate": 3.913739401104485
+        },
+        "data_sent": {
+            "count": 86254,
+            "rate": 477.47620693474715
+        },
+        "http_req_connecting": {
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 1.1608690240452615,
+            "min": 0,
+            "med": 0,
+            "max": 91.558
+        },
+        "vus_max": {
+            "value": 10,
+            "min": 10,
+            "max": 10
+        },
+        "http_req_blocked": {
+            "avg": 1.3408809052333805,
+            "min": 0,
+            "med": 0,
+            "max": 205.5422,
+            "p(90)": 0,
+            "p(95)": 0
+        },
+        "http_req_sending": {
+            "p(95)": 0,
+            "avg": 0.01065106082036775,
+            "min": 0,
+            "med": 0,
+            "max": 1.0019,
+            "p(90)": 0
+        },
+        "http_reqs": {
+            "count": 707,
+            "rate": 3.913739401104485
+        },
+        "vus": {
+            "max": 10,
+            "value": 1,
+            "min": 1
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 89.14133999999999,
+            "p(95)": 100.62226999999999,
+            "avg": 85.13301485148516,
+            "min": 78.942,
+            "med": 83.1797,
+            "max": 213.1432
+        },
+        "http_req_receiving": {
+            "med": 0,
+            "max": 36.2172,
+            "p(90)": 0.9282999999999999,
+            "p(95)": 0.99801,
+            "avg": 0.3964667609618105,
+            "min": 0
+        },
+        "http_req_waiting": {
+            "p(95)": 98.17513999999998,
+            "avg": 84.72589702970295,
+            "min": 78.8964,
+            "med": 82.755,
+            "max": 213.1432,
+            "p(90)": 88.3763
+        }
+    },
+    "root_group": {
+        "groups": {},
+        "checks": {
+                "HTTP 200": {
+                    "name": "HTTP 200",
+                    "path": "::HTTP 200",
+                    "id": "b70aee8a9f7a77d66dd70844a901558a",
+                    "passes": 707,
+                    "fails": 0
+                },
+                "respuesta indica estado OK": {
+                    "name": "respuesta indica estado OK",
+                    "path": "::respuesta indica estado OK",
+                    "id": "8b1fa33b7b0357dd953804c05c3adabf",
+                    "passes": 707,
+                    "fails": 0
+                },
+                "base de datos conectada": {
+                    "path": "::base de datos conectada",
+                    "id": "9f24f6704927a073b80ec2cd6205eafd",
+                    "passes": 707,
+                    "fails": 0,
+                    "name": "base de datos conectada"
+                }
+            },
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+}

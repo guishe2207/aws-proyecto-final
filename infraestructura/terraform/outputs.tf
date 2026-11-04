@@ -19,11 +19,16 @@ output "alb_dns_name" {
 }
 
 output "rds_endpoint" {
-  description = "Endpoint de la base de datos"
+  description = "Endpoint privado de RDS"
   value       = aws_db_instance.main.address
 }
 
 output "rds_port" {
-  description = "Puerto de PostgreSQL"
+  description = "Puerto PostgreSQL"
   value       = aws_db_instance.main.port
+}
+
+output "nat_gateway_id" {
+  description = "NAT Gateway de salida"
+  value       = aws_nat_gateway.main.id
 }
